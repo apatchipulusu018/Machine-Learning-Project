@@ -1,5 +1,4 @@
-Song,Artist,Compound,Negitive,Neutral,Positive
-
+Song,Artist,Compound,Negative,Neutral,Positive
 Ahe's My Kind Of Girl,ABBA,0.9587,0.0,0.875,0.125
 "Andante, Andante",ABBA,0.9877,0.0,0.85,0.15
 As Good As New,ABBA,0.9986,0.029,0.662,0.309
@@ -39082,7 +39081,6 @@ It's Love I'm After,Judy Garland,0.9904,0.044,0.636,0.319
 I've Got Rhythm,Judy Garland,0.7997,0.041,0.882,0.077
 Joan Crawford,Judy Garland,-0.9968,0.393,0.582,0.025
 Look For The Silver Lining,Judy Garland,0.875,0.047,0.817,0.136
-Look For The Silver Lining,Judy Garland,0.875,0.047,0.817,0.136
 Love,Judy Garland,0.9992,0.099,0.437,0.464
 Love Of My Life,Judy Garland,0.9915,0.025,0.666,0.309
 Lucky Day,Judy Garland,0.9919,0.0,0.575,0.425
@@ -52998,7 +52996,6 @@ Earned It,The Weeknd,0.9912,0.067,0.702,0.231
 Enemy,The Weeknd,-0.8653,0.128,0.772,0.099
 Heaven Or Las Vegas,The Weeknd,0.9901,0.022,0.614,0.364
 High For This,The Weeknd,0.9845,0.046,0.741,0.213
-Can't Feel My Face,The Weeknd,-0.9972,0.264,0.613,0.123
 In The Night,The Weeknd,-0.85,0.106,0.814,0.081
 Losers,The Weeknd,-0.8385,0.066,0.906,0.028
 Often,The Weeknd,0.9656,0.053,0.832,0.114

@@ -11,11 +11,24 @@ sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
 ))
 
 st.markdown("<h1 style='color:#1DB954;'>🎵 Mood-Based Spotify Recommender</h1>", unsafe_allow_html=True)
-user_input = st.text_input("Describe the music you're in the mood for:")
+user_input = st.text_input("Describe the kind of music you're in the mood for:")
 
 if user_input:
     top_songs = process_user_query(user_input, k=10)
 
+    # Step 2: Predict Spotify features from query
+    predicted_features = regressor.predict(user_embedding)[0]
+
+    # Step 3: Assign query to a cluster
+    user_cluster = kmeans.predict(user_embedding)[0]
+    cluster_indices = np.where(kmeans.labels_ == user_cluster)[0]
+
+    # Step 4: Find closest tracks in that cluster
+    distances = cosine_distances(user_embedding, X_embeddings[cluster_indices])[0]
+    nearest_indices = cluster_indices[np.argsort(distances)[:10]]
+    recommendations = df.iloc[nearest_indices]
+
+    # Step 5: Display top 10 recommendations
     st.markdown("### 🎧 Top 10 Recommended Songs")
     for _, row in top_songs.iterrows():
         song_name = row['Song']

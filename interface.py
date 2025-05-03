@@ -4,6 +4,14 @@ from recommender import process_user_query
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
+st.markdown("""
+    <style>
+    .stApp {
+        background-color: #e0f2e9;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 #Spotify API setup
 sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
     client_id="21d1a4900aee4e10a6a6bef521fc8bac",

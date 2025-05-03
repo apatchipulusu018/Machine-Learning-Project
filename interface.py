@@ -4,9 +4,10 @@ from recommender import process_user_query
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
+#Spotify API setup
 sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
-    client_id="21d1a4900aee4e10a6a6bef521fc8bac",     
-    client_secret="645b670787b54403b729fff56e6435aa" 
+    client_id="21d1a4900aee4e10a6a6bef521fc8bac",
+    client_secret="645b670787b54403b729fff56e6435aa"
 ))
 
 st.markdown("<h1 style='color:#1DB954;'>🎵 Mood-Based Spotify Recommender</h1>", unsafe_allow_html=True)
@@ -17,19 +18,19 @@ if user_input:
 
     st.markdown("### 🎧 Top 10 Recommended Songs")
     for _, row in top_songs.iterrows():
-        song_name = row['Song']
+        song_name   = row['Song']
         artist_name = row['Artist']
-        valence = row['valence']
+        valence     = row['valence']
 
-        preview_url = None
+        track_url = None
         try:
-            query = f"track:{song_name} artist:{artist_name}"
+            query   = f"track:{song_name} artist:{artist_name}"
             results = sp.search(q=query, type="track", limit=1)
-            items = results.get("tracks", {}).get("items", [])
+            items   = results.get("tracks", {}).get("items", [])
             if items:
-                preview_url = items[0].get("preview_url")
-        except Exception as e:
-            preview_url = None
+                track_url = items[0]["external_urls"]["spotify"]
+        except Exception:
+            track_url = None
 
         st.markdown(f"""
         <div style='background-color:#191414; padding:10px; border-radius:6px; margin-bottom:10px; color:white'>
@@ -38,7 +39,7 @@ if user_input:
         </div>
         """, unsafe_allow_html=True)
         
-        if preview_url:
-            st.audio(preview_url, format="audio/mp3")
+        if track_url:
+            st.markdown(f"[▶️ Listen on Spotify]({track_url})", unsafe_allow_html=True)
         else:
-            st.caption("🔇 No preview available")
+            st.caption("🔇 Couldn’t find on Spotify")

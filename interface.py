@@ -3,9 +3,8 @@ import pandas as pd
 from recommender import process_user_query  
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
-import streamlit.components.v1 as components
 
-# Spotify API setup
+#Spotify API setup
 sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
     client_id="21d1a4900aee4e10a6a6bef521fc8bac",
     client_secret="645b670787b54403b729fff56e6435aa"
@@ -21,32 +20,21 @@ if user_input:
     for _, row in top_songs.iterrows():
         song_name   = row['Song']
         artist_name = row['Artist']
-        valence     = row['valence']
-
 
         st.markdown(f"""
         <div style='background-color:#191414; padding:10px; border-radius:6px; margin-bottom:10px; color:white'>
             <strong>{song_name}</strong><br>
-            <i>{artist_name}</i> — <span style='color:#1DB954'>Valence: {valence:.2f}</span>
+            <i>{artist_name}</i>
         </div>
         """, unsafe_allow_html=True)
         
-
         try:
-            query   = f"track:{song_name} artist:{artist_name}"
-            results = sp.search(q=query, type="track", limit=1)
+            results = sp.search(q=f"{song_name} {artist_name}", type="track", limit=1)
             items   = results.get("tracks", {}).get("items", [])
             if items:
-                track_id = items[0]["id"]
-                embed_html = f"""
-                <iframe
-                  src="https://open.spotify.com/embed/track/{track_id}"
-                  width="300" height="80" frameborder="0"
-                  allowtransparency="true" allow="encrypted-media">
-                </iframe>
-                """
-                components.html(embed_html, height=100)
+                track_url = items[0]["external_urls"]["spotify"]
+                st.markdown(f"[▶️ Listen on Spotify]({track_url})", unsafe_allow_html=True)
             else:
                 st.caption("🔇 Couldn’t find on Spotify")
         except Exception:
-            st.caption("🔇 Couldn’t load Spotify player")
+            st.caption("🔇 Error retrieving Spotify link")

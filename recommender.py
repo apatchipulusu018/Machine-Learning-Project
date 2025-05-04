@@ -28,7 +28,7 @@ X_embeddings = embedder.encode(
     normalize_embeddings=True
 )
 
-# 5. Fit KMeans clustering on the embeddings
+# kmeans on the embeddings
 kmeans = KMeans(n_clusters=5, random_state=42).fit(X_embeddings)
 
 def process_user_query(query_text: str, k: int = 10) -> pd.DataFrame:

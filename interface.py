@@ -7,7 +7,25 @@ from spotipy.oauth2 import SpotifyClientCredentials
 st.markdown("""
     <style>
     .stApp {
-        background-color: #e0f2e9;
+        background-color: #c8e6c9;
+    }
+    .stApp h1 {
+        text-align: center !important;
+        font-size: 3rem !important;
+        color: #1DB954 !important;
+    }
+    .stApp h2 {
+        text-align: center !important;
+        font-size: 1.5rem !important;
+    }
+    .stTextInput > div {
+        display: flex !important;
+        justify-content: center !important;
+    }
+    .stTextInput input {
+        width: 60% !important;
+        text-align: left !important;
+        font-size: 1rem !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -18,20 +36,36 @@ sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
     client_secret="645b670787b54403b729fff56e6435aa"
 ))
 
-st.markdown("<h1 style='color:#1DB954;'>🎵 Mood-Based Spotify Recommender</h1>", unsafe_allow_html=True)
-user_input = st.text_input("Describe the music you're in the mood for:")
+st.markdown("<h1 style='text-align:center; font-size:3rem; color:#1DB954'>🎵 Moodify 🎵</h1>", unsafe_allow_html=True)
+
+st.markdown(
+    "<h2 style='text-align:center; font-size:1.5rem;'>"
+    "Describe the type of music you’re in the mood for:"
+    "</h2>",
+    unsafe_allow_html=True
+)
+
+user_input = st.text_input("", key="mood_input")
+
 
 if user_input:
     top_songs = process_user_query(user_input, k=10)
 
     st.markdown("### 🎧 Top 10 Recommended Songs")
-    for _, row in top_songs.iterrows():
-        song_name   = row['Song']
-        artist_name = row['Artist']
+    for i, row in enumerate(top_songs.itertuples(), start=1):
+        song_name   = row.Song
+        artist_name = row.Artist
 
         st.markdown(f"""
-        <div style='background-color:#191414; padding:10px; border-radius:6px; margin-bottom:10px; color:white'>
-            <strong>{song_name}</strong><br>
+        <div style='
+            background-color:#191414;
+            padding:10px;
+            border-radius:6px;
+            margin-bottom:10px;
+            color:white;
+            text-align:center;
+        '>
+            <strong>{i}. {song_name}</strong><br>
             <i>{artist_name}</i>
         </div>
         """, unsafe_allow_html=True)

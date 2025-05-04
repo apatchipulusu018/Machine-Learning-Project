@@ -51,7 +51,7 @@ user_input = st.text_input("", key="mood_input")
 if user_input:
     top_songs = process_user_query(user_input, k=10)
 
-    st.markdown("### 🎧 Top 10 Recommended Songs")
+    st.markdown("### 🎧 Top 10 Recommended Songs 🎧")
     for i, row in enumerate(top_songs.itertuples(), start=1):
         song_name   = row.Song
         artist_name = row.Artist

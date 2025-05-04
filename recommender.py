@@ -8,18 +8,22 @@ from sklearn.cluster import KMeans
 df = pd.read_csv("merged_spotify_dataset.csv")
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
+#loading pre trained sentence embedding model here. this converts english text to vectors.
 embedder = SentenceTransformer("BAAI/bge-large-en-v1.5", device=device)
 
+#build text descriptions for each track. 
+#the embedding model only takes in text, so we translate the charactersitics of evrey to a short english sentence.
+# note: may need to tweak this description a bit
 def row_to_description(row):
-    return (
-        f"A {row['track_genre']} song '{row['Song']}' by {row['Artist']}, "
-        f"{'explicit' if row['explicit'] else 'clean'}, "
-        f"popularity {row['popularity']:.0f}, "
-        f"{'high' if row['energy'] > 0.6 else 'low'} energy, "
-        f"{'high' if row['acousticness'] > 0.6 else 'low'} acousticness."
-    )
+    return (f"A {row['track_genre']} song called '{row['Song']}' by {row['Artist']} "
+            f"that is {'explicit' if row['explicit'] else 'not explicit'}, "
+            f"with popularity {row['popularity']:.0f}, "
+            f"{'high' if row['energy']>0.6 else 'low'} energy, "
+            f"and {'high' if row['acousticness']>0.6 else 'low'} acousticness.")
 
 descriptions = df.apply(row_to_description, axis=1).tolist()
+
+#takes in those short english sentences for every song and computes feature vector
 X_embeddings = embedder.encode(
     descriptions,
     batch_size=64,

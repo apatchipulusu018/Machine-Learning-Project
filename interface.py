@@ -76,17 +76,7 @@ if user_input:
 
         img_html = (f"<img src='{album_img}' width='60' height='60' "
                     "style='border-radius:4px; margin-right:12px;' />") if album_img else ""
-        play_btn = (f"<a href='{track_url}' target='_blank' style='text-decoration:none;'>"
-                    "<button style="
-                    "'background-color:#BFC58780;"
-                    "border:none;"
-                    "border-radius:4px;"
-                    "padding:8px 12px;"
-                    "color:white;"
-                    "font-size:1rem;"
-                    "cursor:pointer'"
-                    ">▶️ Play</button></a>") if track_url else ""
-
+       
         st.markdown(f"""
         <div style="
             display:flex;
@@ -102,6 +92,5 @@ if user_input:
             <strong style="font-size:1.1rem;">{i}. {song_name}</strong><br>
             <em style="opacity:0.8;">{artist_name}</em>
             </div>
-            {play_btn}
         </div>
         """, unsafe_allow_html=True)
